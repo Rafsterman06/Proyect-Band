@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gira</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('https://promocionmusical.es/wp-content/uploads/2019/01/mejores-bandas-de-rock.png');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white; /* Color de las letras */
+            position: relative; /* Para que el contenido absoluto sea relativo al body */
+        }
+        img {
+            margin: 10px;
+        }
+        .marquesina {
+            position: absolute; /* Posición absoluta para que la marquesina se desplace */
+            top: 30%; /* Alineación vertical */
+            left: 0; /* Iniciar desde la izquierda */
+            font-size: 3em; /* Tamaño de fuente triple */
+            white-space: nowrap; /* Evitar que el texto se divida en varias líneas */
+            animation: desplazar 20s linear infinite; /* Animación de desplazamiento más lenta */
+        }
+        @keyframes desplazar {
+            0% { left: 100%; } /* Inicia fuera del área visible */
+            100% { left: -100%; } /* Termina fuera del área visible */
+        }
+    </style>
+</head>
+<body>
+    <div class="marquesina">Descubre nuestra gira</div>
+    <img src="https://static.wixstatic.com/media/05e3dc_b7024e67fd35492d9990dda97ea8aa33.png/v1/fill/w_595,h_313,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/05e3dc_b7024e67fd35492d9990dda97ea8aa33.png" alt="Imagen principal" style="width: 529px; height: 200px; object-fit: contain;">
+    
+</body>
+</html>

@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://Master:1Q2W3E4R5T6Y@cluster0.fy0rpxe.mongodb.net/";
+const uri = "mongodb+srv://al21311231:QWERTY@cluster0.7hwrvoe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 class Conexion{
     conexion(){
 
@@ -21,6 +21,10 @@ class Conexion{
                 // Send a ping to confirm a successful connection
                 await client.db("admin").command({ ping: 1 });
                 console.log("Pinged your deployment. You successfully connected to MongoDB!");
+
+
+
+                
             } finally {
                 // Ensures that the client will close when you finish/error
                 await client.close();
