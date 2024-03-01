@@ -10,6 +10,8 @@ let cookieParser=require('cookie-parser');
 
 let Conexion=require("./Conexion.js");
 let conexion=new Conexion();
+let Prueba=require("./Prueba.js");
+let prueba=new Prueba();
 
 require('dotenv').config();
 class Server{
@@ -74,7 +76,6 @@ class Server{
                 await conn.connect();
                 let insertar=await conn.db("Banda").collection("Usuarios").insertOne({"nombre":nombre,"password":password,"phone":phone,"email":email});
                 console.log("Usuario Insertado!!!");
-                res.render("/");
             }finally {
                 // Ensures that the client will close when you finish/error
                 await conn.close();
@@ -83,7 +84,42 @@ class Server{
             console.log(nombre+" "+password+" "+phone+" "+email);
             res.redirect('/');
         });
+        this.app.get('/gologin', (req, res) => {
+            res.render('login');
+        });
+        this.app.get("/login",async (req,res)=>{
+            let usuar=req.query.username;
+            let passw=req.query.password;
+            let x;
+            //let passSha1=Sha1(passw);
+            let conn=conexion.conexion();
+            try{
+                await conn.connect();
+                let read=await conn.db("Banda").collection("Usuarios").findOne({"nombre":usuar,"password":passw});
+                x=read;
+            }finally {
+                // Ensures that the client will close when you finish/error
+                await conn.close();
+            }
 
+            if(x!=null){
+
+                if(x.nombre==usuar && x.password==passw){
+                    let user={
+                        usr:usuar,
+                        psw:passw,
+                    };
+                    req.session.user=user;
+                    req.session.save();
+                    res.render('perfil');
+                }else{
+                    res.redirect('/');
+                    console.log("Salida");
+                }
+            }else{
+                res.redirect('/');
+            }
+        });
     }
     
     listen(){
