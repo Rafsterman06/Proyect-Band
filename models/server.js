@@ -46,8 +46,8 @@ class Server{
         /* request y responses*/
 
         this.app.get('/prueba', (req, res) => {
-            let nombre="hola";//req.query.nombre;
-            let contrasenia="hola";//req.query.contrasenia;
+            let nombre="hola";
+            let contrasenia="hola";
 
             let login=conexion.conexion(nombre, contrasenia);
 
@@ -65,6 +65,7 @@ class Server{
         this.app.get('/goregistrar', (req, res) => {
             res.render("registrar");
         });
+
         this.app.get('/createusuario', async (req, res) => {
             let nombre=req.query.username;
             let password=req.query.password;
@@ -84,13 +85,16 @@ class Server{
             console.log(nombre+" "+password+" "+phone+" "+email);
             res.redirect('/');
         });
+        
         this.app.get('/gologin', (req, res) => {
             res.render('login');
         });
+        
         this.app.get("/login",async (req,res)=>{
             let usuar=req.query.username;
             let passw=req.query.password;
             let x;
+            let confirmacion;
             //let passSha1=Sha1(passw);
             let conn=conexion.conexion();
             try{
@@ -101,7 +105,6 @@ class Server{
                 // Ensures that the client will close when you finish/error
                 await conn.close();
             }
-
             if(x!=null){
 
                 if(x.nombre==usuar && x.password==passw){
@@ -120,6 +123,25 @@ class Server{
                 res.redirect('/');
             }
         });
+        this.app.get('/goconfiguracion', (req, res) => {
+            res.render('configuracion');
+        });
+        /*
+        this.app.get('/update', (req, res) => {
+            let nombre=req.query.username;
+            let password=req.query.password;
+            let phone=req.query.phone;
+            let email=req.query.email;
+            let update;
+
+            let conn=conexion.conexion();
+            try{
+                await conn.connect();
+                update=conn.db("Banda").collection("Usuarios").updateOne()
+
+            }
+        });
+        */
     }
     
     listen(){
