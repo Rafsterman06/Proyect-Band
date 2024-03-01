@@ -79,6 +79,9 @@ class Server{
                 // Ensures that the client will close when you finish/error
                 await conn.close();
             }
+
+            console.log(nombre+" "+password+" "+phone+" "+email);
+            res.redirect('/');
         });
 
     }
