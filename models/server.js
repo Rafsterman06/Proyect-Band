@@ -8,7 +8,7 @@ let session=require('express-session');
 
 let cookieParser=require('cookie-parser');
 
-let Conexion=require("./Conexion.js");
+let Conexion=require("./conexion");
 let conexion=new Conexion();
 let Prueba=require("./Prueba.js");
 let prueba=new Prueba();
