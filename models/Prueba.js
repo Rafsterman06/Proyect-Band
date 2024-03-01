@@ -1,6 +1,5 @@
 require('dotenv').config();
 
-const { json } = require('express');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://al21311231:QWERTY@cluster0.7hwrvoe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 class Conexion{
@@ -15,7 +14,6 @@ class Conexion{
             }
         });
         
-            
         return client;
     }
 }

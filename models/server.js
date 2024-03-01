@@ -8,7 +8,7 @@ let session=require('express-session');
 
 let cookieParser=require('cookie-parser');
 
-let Conexion=require("./conexion.JS");
+let Conexion=require("./Conexion.js");
 let conexion=new Conexion();
 
 require('dotenv').config();
@@ -44,9 +44,41 @@ class Server{
         /* request y responses*/
 
         this.app.get('/prueba', (req, res) => {
+            let nombre="hola";//req.query.nombre;
+            let contrasenia="hola";//req.query.contrasenia;
+
+            let login=conexion.conexion(nombre, contrasenia);
+
+            if(login==true){
+                console.log("se ha logeado!!!");
+            }
+            else{
+                console.log(":(");
+
+            }
+
+            res.send("Fin!!");
+        });
+
+        this.app.get('/goregistrar', (req, res) => {
+            res.render("registrar");
+        });
+        this.app.get('/createusuario', async (req, res) => {
+            let nombre=req.query.username;
+            let password=req.query.password;
+            let phone=req.query.phone;
+            let email=req.query.email;
 
             let conn=conexion.conexion();
-            res.send("Pruebaafjlksjf;");
+            try{
+                await conn.connect();
+                let insertar=await conn.db("Banda").collection("Usuarios").insertOne({"nombre":nombre,"password":password,"phone":phone,"email":email});
+                console.log("Usuario Insertado!!!");
+                res.render("/");
+            }finally {
+                // Ensures that the client will close when you finish/error
+                await conn.close();
+            }
         });
 
     }
