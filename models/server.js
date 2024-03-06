@@ -11,8 +11,7 @@ let cookieParser=require('cookie-parser');
 let Conexion=require("./conexion");
 let conexion=new Conexion();
 
-let Prueba=require("./Prueba.js");
-let prueba=new Prueba();
+
 
 require('dotenv').config();
 class Server{
