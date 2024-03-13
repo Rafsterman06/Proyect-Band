@@ -27,6 +27,7 @@ describe('Prueba de conexion',()=>{
 
         const insertedUser = await users.findOne({_id: 'some-user-id'});
         expect(insertedUser).toEqual(mockUser);
+        await conn.db("Banda").collection("Usuarios").findOneAndDelete({_id: 'some-user-id'});
     });
 });
 
