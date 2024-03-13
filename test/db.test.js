@@ -1,8 +1,4 @@
 
-//const { MongoClient } = require('mongodb'); //Libreria para usar los metodos y funciones de mongodb
-//const uri = "mongodb+srv://al21311231:QWERTY@cluster0.7hwrvoe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-//const dbname = "Banda";
-
 let Conexion=require("../models/conexion");
 let conexion=new Conexion();
 describe('Prueba de conexion',()=>{
