@@ -17,7 +17,7 @@ body{
 }   
 
 section {
-    
+    position:relative;
     max-width: 400px;
     background-color: transparent;
     border: 2px solid rgba(255, 255, 255, 0.5);
@@ -115,37 +115,38 @@ input:valid  ~ label{
     text-decoration: underline;
 }
 
-.Actualizar {
-    
-    width: 60%;
-    height: 30px;
+button.Inicio{
+    width:50% ;
+    height: 60%;
     border-radius: 40px;
     background-color: #810101;
     cursor: pointer;
     font-size: 1rem;
     font-weight: 100;
     transition: all 0.4s ease;
+    margin-left: 60px;
+    display: inline-block;
+    margin-bottom: 20px;
+    
+}
+
+button.Update{
     position: relative;
-    left: 20%
+    width:50% ;
+    height: 60%;
+    border-radius: 40px;
+    background-color: #810101;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 100;
+    transition: all 0.4s ease;
+    display: inline-block;
+    margin-bottom: 20px;
+    left: 25%;
+    
     
 }
 
 button:hover{
     background-color: #810101;
 }
-
-.Regresar {
-    width: 60%;
-    height: 30px;
-    border-radius: 40px;
-    background-color: #810101;
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: 100;
-    transition: all 0.4s ease;
-    position: relative;
-    left: 20%
-
-}
-
-
