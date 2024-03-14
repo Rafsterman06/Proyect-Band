@@ -181,7 +181,7 @@ class Server{
                 let conn=conexion.conexion();
                 try{
                     await conn.connect();
-                    await conn.db("Banda").collection("Usuarios").updateOne((nombre+" "+password+" "+phone+" "+email));
+                    await conn.db("Banda").collection("Usuarios").updateOne({"_id":id},{"$set":{"nombre":nombre,"password":password,"phone":phone,"email":email}});
                 }finally{
                     // Ensures that the client will close when you finish/error
                     await conn.close();
