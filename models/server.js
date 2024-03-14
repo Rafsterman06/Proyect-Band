@@ -45,21 +45,11 @@ class Server{
         //se agragan rutas
         /* request y responses*/
 
-        this.app.get('/prueba', (req, res) => { //Solo es para probar algunos aspectos que se compliquen durante el desarrollo
-            let nombre="hola";
-            let contrasenia="hola";
+        this.app.post('/prueba', (req, res) => { //Solo es para probar algunos aspectos que se compliquen durante el desarrollo
+            let usuar=req.query.username;
+            let passw=req.query.password;
 
-            let login=conexion.conexion();
-
-            if(login==true){
-                console.log("se ha logeado!!!");
-            }
-            else{
-                console.log(":(");
-
-            }
-
-            res.send("Fin!!");
+             res.render('perfil');
         });
 
         this.app.get('/gogira', (req, res) => { //Redirecciona a la pagina gira
@@ -71,7 +61,11 @@ class Server{
         });
 
         this.app.get('/govideos', (req, res) => { //Redirecciona a la pagina videos
-            res.render('videoapi');
+            if(req.session.user){
+                res.render('videoapi');
+
+            }else{res.render('login');}
+            
         });
 
         this.app.get('/goregistrar', (req, res) => { //Redirecciona a la pagina registrar
@@ -86,15 +80,15 @@ class Server{
             let email=req.query.email; //Hace referencia al email
             //Termina la referenciacion de la parte de la visa hacia las variables
 
-            //nombre=Sha1(nombre); //Ayuda a encriptar los datos (pendiente usar xd)
-            //password=Sha1(password); //Ayuda a encriptar los datos (pendiente usar xd)
-            //phone=Sha1(phone); //Ayuda a encriptar los datos (pendiente usar xd)
-            //email=Sha1(email); //Ayuda a encriptar los datos (pendiente usar xd)
+            nombre=Sha1(nombre); //Ayuda a encriptar los datos (pendiente usar xd)
+            password=Sha1(password); //Ayuda a encriptar los datos (pendiente usar xd)
+            phone=Sha1(phone); //Ayuda a encriptar los datos (pendiente usar xd)
+            email=Sha1(email); //Ayuda a encriptar los datos (pendiente usar xd)
 
             let conn=conexion.conexion(); //Se crea instancia de la clase conexion que abre la conexion con el servidor mongodb
             try{
                 await conn.connect(); //Abre la conexion con mongodb
-                let insertar=await conn.db("Banda").collection("Usuarios").insertOne({"nombre":nombre,"password":password,"phone":phone,"email":email}); //Agrega un usuario con los datos de las variables anteriores
+                await conn.db("Banda").collection("Usuarios").insertOne({"nombre":nombre,"password":password,"phone":phone,"email":email}); //Agrega un usuario con los datos de las variables anteriores
                 console.log("Usuario Insertado!!!"); //Me indica que el usuario se agrego xd
             }finally {
                 // Ensures that the client will close when you finish/error
@@ -109,73 +103,93 @@ class Server{
             res.render('login');
         });
         
-        this.app.get("/login",async (req,res)=>{ //Logea al usuario
+        this.app.get("/login", (req,res)=>{ //Logea al usuario
 
             //Inicia la referenciacion de la parte de la vista hacia variables
             let usuar=req.query.username;//Hace referencia al usuario
             let passw=req.query.password;//Hace referencia al password
             //Termina la referenciacion de la parte de la visa hacia las variables
             
-            let x; //Me ayuda a manipular el archivo JSON de la consulta
-            
-            //usuar=Sha1(usuar); //Ayuda a encriptar los datos (pendiente usar xd)
-            //passw=Sha1(passw); //Ayuda a encriptar los datos (pendiente usar xd)
-            
-            let conn=conexion.conexion(); //Se crea instancia de la clase conexion que abre la conexion con el servidor mongodb
-            try{
-                await conn.connect(); //Abre la conexion con mongodb
-                let read=await conn.db("Banda").collection("Usuarios").findOne({"nombre":usuar,"password":passw}); //REaliza la consulta con la base de datos
-                x=read; //Me permite manipular la consulta
-            }finally {
-                // Ensures that the client will close when you finish/error
-                await conn.close(); //Cierra la conexion con el servidor
-            }
-            if(x!=null){ //Valida que la variable no este vacia despues de realizar la consulta
-                if(x.nombre==usuar && x.password==passw){ //Compara los datos de la consulta con los datos que proporciono el usuario
-                    let user={ //Almacena los datos en una cookie xd
-                        usr:usuar,
-                        psw:passw,
-                    };
-
-                    req.session.user=user; //Guarda la cookie
-                    
-                    req.session.save(); //Guarda los datos
-                    
-                    res.render('perfil'); //Redirige a la pagina del perfil del usuario
-                }else{ //Redirige al inicio del sitio web
-                    res.redirect('/');
-                    
-                    console.log("Salida");
-                }
+            if(usuar!=null && passw!=null){ //Compara los datos de la consulta con los datos que proporciono el usuario
+                let user={ //Almacena los datos en una cookie xd
+                    usr:usuar,
+                    psw:passw
+                };
+                req.session.user=user; //Guarda la cookie
+                
+                req.session.save(); //Guarda los datos
+                
+                 res.redirect('/perfil'); //Redirige a la pagina del perfil del usuario
             }else{ //Redirige al inicio del sitio web
-                res.redirect('/');
-
-                console.log("Salida")
+                res.render('login')
             }
+            
+        });
+
+        this.app.get('/perfil', async (req, res) => {
+            if(req.session.user){
+                let x;
+                let pass=req.session.user.psw;
+                let usu=req.session.user.usr;
+                pass=Sha1(pass);
+                usu=Sha1(usu);
+                let conn=conexion.conexion(); //Se crea instancia de la clase conexion que abre la conexion con el servidor mongodb
+                try{
+                    await conn.connect(); //Abre la conexion con mongodb
+                    let read=await conn.db("Banda").collection("Usuarios").findOne({"nombre":usu,"password":pass},{"_id":1,"nombre":1,"password":1}); //REaliza la consulta con la base de datos
+                    x=read; //Me permite manipular la consulta
+                }finally {
+                    // Ensures that the client will close when you finish/error
+                    await conn.close(); //Cierra la conexion con el servidor
+                }
+
+                if(x!=null){
+                    console.log(x._id+", "+x.nombre+", "+x.password);
+                    let user={
+                        id:x._id,
+                        usr:x.nombre,
+                        psw:x.password
+                    }
+                    req.session.user=user;
+                    req.session.save();
+                    res.render('perfil');
+                }else{ res.redirect('login');}
+            }else{res.render('login');}
         });
 
         this.app.get('/goconfiguracion', (req, res) => { //Redirecciona a la pagina de configuracion
-            res.render('configuracion');
+            if(req.session.user){
+                res.render('configuracion');
+            }else{ res.redirect('login');}
+
         });
-        /*
+        
         this.app.get('/update', async (req, res) => {
-            let nombre=req.query.username;
-            let password=req.query.password;
-            let phone=req.query.phone;
-            let email=req.query.email;
-            let update;
+            if(req.session.user){
 
-            let conn=conexion.conexion();
-            try{
-                await conn.connect();
-                update=conn.db("Banda").collection("Usuarios").updateOne((nombre+" "+password+" "+phone+" "+email));
-
-            }finally{
-                // Ensures that the client will close when you finish/error
-                await conn.close();
-            }
+                let id=req.session.user.id;
+                let nombre=req.query.username;
+                let password=req.query.password;
+                let phone=req.query.phone;
+                let email=req.query.email;
+                
+                nombre=Sha1(nombre);
+                password=Sha1(password);
+                phone=Sha1(phone);
+                email=Sha1(email);
+                
+                let conn=conexion.conexion();
+                try{
+                    await conn.connect();
+                    await conn.db("Banda").collection("Usuarios").updateOne((nombre+" "+password+" "+phone+" "+email));
+                }finally{
+                    // Ensures that the client will close when you finish/error
+                    await conn.close();
+                }
+                res.redirect('/perfil');
+            }else{res.redirect('login');}
         });
-        */
+        
     }
     
     listen(){
