@@ -145,33 +145,51 @@ class Server{
 
                 if(x!=null){
                     console.log(x._id+", "+x.nombre+", "+x.password);
-                    res.render('perfil');;
+                    let user={
+                        id:x._id,
+                        usr:x.nombre,
+                        psw:x.password
+                    }
+                    req.session.user=user;
+                    req.session.save();
+                    res.render('perfil');
                 }else{ res.redirect('login');}
             }else{res.render('login');}
         });
 
         this.app.get('/goconfiguracion', (req, res) => { //Redirecciona a la pagina de configuracion
-            res.render('configuracion');
+            if(req.session.user){
+                res.render('configuracion');
+            }else{ res.redirect('login');}
+
         });
-        /*
+        
         this.app.get('/update', async (req, res) => {
-            let nombre=req.query.username;
-            let password=req.query.password;
-            let phone=req.query.phone;
-            let email=req.query.email;
-            let update;
+            if(req.session.user){
 
-            let conn=conexion.conexion();
-            try{
-                await conn.connect();
-                update=conn.db("Banda").collection("Usuarios").updateOne((nombre+" "+password+" "+phone+" "+email));
-
-            }finally{
-                // Ensures that the client will close when you finish/error
-                await conn.close();
-            }
+                let id=req.session.user.id;
+                let nombre=req.query.username;
+                let password=req.query.password;
+                let phone=req.query.phone;
+                let email=req.query.email;
+                
+                nombre=Sha1(nombre);
+                password=Sha1(password);
+                phone=Sha1(phone);
+                email=Sha1(email);
+                
+                let conn=conexion.conexion();
+                try{
+                    await conn.connect();
+                    await conn.db("Banda").collection("Usuarios").updateOne((nombre+" "+password+" "+phone+" "+email));
+                }finally{
+                    // Ensures that the client will close when you finish/error
+                    await conn.close();
+                }
+                res.redirect('/perfil');
+            }else{res.redirect('login');}
         });
-        */
+        
     }
     
     listen(){
