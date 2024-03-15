@@ -45,11 +45,9 @@ class Server{
         //se agragan rutas
         /* request y responses*/
 
-        this.app.post('/prueba', (req, res) => { //Solo es para probar algunos aspectos que se compliquen durante el desarrollo
-            let usuar=req.query.username;
-            let passw=req.query.password;
+        this.app.get('/prueba', async (req, res) => { //Solo es para probar algunos aspectos que se compliquen durante el desarrollo
+            let command={ide:'Tom'};
 
-             res.render('perfil');
         });
 
         this.app.get('/gogira', (req, res) => { //Redirecciona a la pagina gira
@@ -78,17 +76,20 @@ class Server{
             let password=req.query.password; //Hace referencia al password
             let phone=req.query.phone; //Hace referencia al phone
             let email=req.query.email; //Hace referencia al email
+            let id=nombre+password;
             //Termina la referenciacion de la parte de la visa hacia las variables
 
-            nombre=Sha1(nombre); //Ayuda a encriptar los datos (pendiente usar xd)
-            password=Sha1(password); //Ayuda a encriptar los datos (pendiente usar xd)
-            phone=Sha1(phone); //Ayuda a encriptar los datos (pendiente usar xd)
-            email=Sha1(email); //Ayuda a encriptar los datos (pendiente usar xd)
+            nombre=Sha1(nombre); //Ayuda a encriptar los datos
+            password=Sha1(password); //Ayuda a encriptar los datos
+            phone=Sha1(phone); //Ayuda a encriptar los datos
+            email=Sha1(email); //Ayuda a encriptar los datos
+            id=Sha1(id);
+
 
             let conn=conexion.conexion(); //Se crea instancia de la clase conexion que abre la conexion con el servidor mongodb
             try{
                 await conn.connect(); //Abre la conexion con mongodb
-                await conn.db("Banda").collection("Usuarios").insertOne({"nombre":nombre,"password":password,"phone":phone,"email":email}); //Agrega un usuario con los datos de las variables anteriores
+                await conn.db("Banda").collection("Usuarios").insertOne({"ide":id,"nombre":nombre,"password":password,"phone":phone,"email":email}); //Agrega un usuario con los datos de las variables anteriores
                 console.log("Usuario Insertado!!!"); //Me indica que el usuario se agrego xd
             }finally {
                 // Ensures that the client will close when you finish/error
@@ -136,7 +137,7 @@ class Server{
                 let conn=conexion.conexion(); //Se crea instancia de la clase conexion que abre la conexion con el servidor mongodb
                 try{
                     await conn.connect(); //Abre la conexion con mongodb
-                    let read=await conn.db("Banda").collection("Usuarios").findOne({"nombre":usu,"password":pass},{"_id":1,"nombre":1,"password":1}); //REaliza la consulta con la base de datos
+                    let read=await conn.db("Banda").collection("Usuarios").findOne({"nombre":usu,"password":pass},{"ide":1,"nombre":1,"password":1}); //REaliza la consulta con la base de datos
                     x=read; //Me permite manipular la consulta
                 }finally {
                     // Ensures that the client will close when you finish/error
@@ -144,9 +145,9 @@ class Server{
                 }
 
                 if(x!=null){
-                    console.log(x._id+", "+x.nombre+", "+x.password);
+                    console.log(x.ide+", "+x.nombre+", "+x.password);
                     let user={
-                        id:x._id,
+                        ide:x.ide,
                         usr:x.nombre,
                         psw:x.password
                     }
@@ -167,7 +168,6 @@ class Server{
         this.app.get('/update', async (req, res) => {
             if(req.session.user){
 
-                let id=req.session.user.id;
                 let nombre=req.query.username;
                 let password=req.query.password;
                 let phone=req.query.phone;
@@ -180,14 +180,38 @@ class Server{
                 
                 let conn=conexion.conexion();
                 try{
+
+                    let command={ide:req.session.user.ide};
                     await conn.connect();
-                    await conn.db("Banda").collection("Usuarios").updateOne({"_id":id},{"$set":{"nombre":nombre,"password":password,"phone":phone,"email":email}});
+                    await conn.db("Banda").collection("Usuarios").updateOne(command,{"$set":{"nombre":nombre,"password":password,"phone":phone,"email":email}});
+                    
+
                 }finally{
                     // Ensures that the client will close when you finish/error
                     await conn.close();
                 }
                 res.redirect('/perfil');
             }else{res.redirect('login');}
+        });
+
+        this.app.get('/delete', async (req, res) => {
+            
+            if(req.session.user){
+
+                let conn=conexion.conexion();
+                try{
+                    let command={ide:req.session.user.ide};
+                    console.log(req.session.user.ide);
+                    await conn.connect();
+                    await conn.db("Banda").collection("Usuarios").deleteOne(command);
+                    console.log("Eliminado!!! ");
+                    
+                }finally{
+                    // Ensures that the client will close when you finish/error
+                    await conn.close();
+                }
+                res.redirect('/');
+            }else{res.redirect('/login');}
         });
         
     }
