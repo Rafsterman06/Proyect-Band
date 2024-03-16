@@ -32,6 +32,8 @@ class Server{
         this.app.use(express.static('public'));
         // exportas ejs para poderlo usar
         this.app.set('view engine', 'ejs');
+        this.app.use(express.static(__dirname + '/public'));
+
         //para las cookies
         this.app.use(cookieParser());
         //para sesiones de usuarios
