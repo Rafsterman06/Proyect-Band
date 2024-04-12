@@ -1,4 +1,3 @@
-
 let Conexion=require("../models/conexion");
 let conexion=new Conexion();
 describe('Prueba de conexion',()=>{

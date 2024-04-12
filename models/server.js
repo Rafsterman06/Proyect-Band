@@ -194,7 +194,7 @@ class Server{
                     await conn.close();
                 }
                 res.redirect('/perfil');
-            }else{res.redirect('login');}
+            }else{res.redirect('/login');}
         });
 
         this.app.get('/delete', async (req, res) => {
