@@ -4,20 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video API</title>
+    <link href="/styles/video.css" rel="stylesheet" type="text/css">     
+   
 </head>
 <body>
-    <h1>Video de YouTube</h1>
-    <div id="player"></div>
+    <container>
+        <header>
+            <nav>
+                <input type="checkbox" id="toggle">
+                <div class="logo">
+                  Gordos Oldies Music</div>
+
+                <ul class="list">
+                    <li><a href="Contacto.html">CONTACTO</a></li>
+                    <li><a href="index.html"> INICIO</a></li>
+                </ul>
+
+                <label for="toggle" class = "icon-bars">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </label>
+            </nav>
+        </header>
+       
+
+        <main>
+           <container class="log">
+            <h1>Gordos Oldies music</h1>
+            <div id="player"></div>
 
     <!-- Carga la API de YouTube con tu clave de API -->
     <script src="https://www.youtube.com/iframe_api?key=AIzaSyC3xfv9KmqLtTKKsj_Vw6mFwHwbC01umag"></script>
-    <script>
+    <script class="Y">
         var player;
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('player', {
                 height: '315',
                 width: '560',
-                videoId: 'EAPFZwfT3Bs', // ID del video
+                videoId: 'iI69Ipz43D4', // ID del video 9ZlvEcbEDIQ
                 playerVars: {
                     'autoplay': 1,
                     'controls': 1
@@ -38,6 +63,20 @@
                 // Realizar acciones adicionales cuando el video está reproduciéndose
             }
         }
-    </script>
+       
+         </script>
+          
+           </container>
+        
+        </main>
+        <p class= "description" > La Banda Gordos Oldies music Fue requerida para celebrar el cumpleaños al rithmo de las Oldies.
+            evento hubo muchas sorpresas, ya que alguien del publico se avento un "Palomazo" motivando mas al publico, y para finalizar 
+        con broche de oro tocaron e improvisaron algunos ritmos de Rock And Roll. el evento tuvo que ser finalizado por cuestiones climaticas.
+    pero fue todo un exito.        </p>
+        <br>
+        <footer>
+            Seccion de Abaut me, copyrigth
+        </footer>
+    </container>
 </body>
 </html>
