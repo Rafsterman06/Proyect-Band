@@ -43,14 +43,16 @@ main {
     
 }
 footer  {
-    position: relative;
+    
+    position: absolute;
     background-color: black;
     color: white;
     height: 5%;
     text-align: center;
-    bottom: 100px;
+    bottom: 15px;
+    width: 100%;
+    right: 0%;
 }
-
 .log {
 position: absolute;
 text-align: center;

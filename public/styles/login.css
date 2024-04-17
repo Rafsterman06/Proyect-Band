@@ -12,7 +12,7 @@ html{
 .container {
 flex-direction: column;
 display: flex;
-max-height: 1080px;
+max-height: 980px;
 }
 
 
@@ -20,19 +20,19 @@ header {
     height: 50px;
 }
 
-main {
-    display: flex;
-}
+
 
 footer  {
-    position: relative;
+    
+    position: absolute;
     background-color: black;
     color: white;
     height: 5%;
     text-align: center;
-    bottom: -180px;
-    width: 680%;
-    left: -608px;
+    bottom: 15px;
+    width: 100%;
+    right: 0%;
+    
 }
 
 .log {

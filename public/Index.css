@@ -30,15 +30,18 @@ height: 80vh;
 display: flex;
 }
 
+
 footer  {
+    
     position: absolute;
     background-color: black;
     color: white;
     height: 5%;
-    width: 194.8vh;
     text-align: center;
-    bottom: 10px;
-}   
+    bottom: 15px;
+    width: 100%;
+    right: 0%;
+}
    
 
 h1 {

@@ -159,3 +159,14 @@ nav .icon-bars .line {
     width: 830px;
    
 }
+
+footer  {
+    position: absolute;
+    background-color: black;
+    color: white;
+    height: 5%;
+    text-align: center;
+    bottom: 15px;
+    width: 100%;
+    right: 0%;
+}

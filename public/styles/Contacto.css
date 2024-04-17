@@ -17,26 +17,46 @@ flex-direction: column;
 display: flex;
 }
 
+footer  {
+    
+    position: absolute;
+    background-color: black;
+    color: white;
+    height: 5%;
+    text-align: center;
+    bottom: 15px;
+    width: 100%;
+    right: 0%;
+}
+
 header {
     height: 50px;
 }
 
 main {
-    height: 90vh;
+    height:93vh;
     display: flex;
     background-image: url('./backin.jpg');
     background-repeat: no-repeat;
     background-size: cover;
 }
+.logotipo {
+    background-image: url('/resources/Contactpng.png');
+    background-repeat: no-repeat;
+    position: absolute;
+    margin: 0 auto;
+    top: 20%;
+    bottom: 0%;
+    left: 23%;
+    right: 0%;
+}
+
 .log {
 position: absolute;
 text-align: center;
 right:40% ;
-top:50%;
-
-    
-    
-   
+top:15%;   
+color: rgb(255, 255, 255);
 }
 
 nav {
