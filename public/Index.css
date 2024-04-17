@@ -26,16 +26,16 @@ header {
 }
 
 main {
-height: 90vh;
+height: 80vh;
 display: flex;
 }
 
 footer  {
-    position: relative;
+    position: absolute;
     background-color: black;
     color: white;
     height: 5%;
-    width: 197.9vh;
+    width: 194.8vh;
     text-align: center;
     bottom: 10px;
 }   
