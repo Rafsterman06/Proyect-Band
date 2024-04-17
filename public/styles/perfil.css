@@ -10,7 +10,11 @@ html{
 
 body {
     font-size: 1rem;
-}
+    height: 90vh;
+    display: flex;
+    background-image: url('./backin.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
 
 .container {
 flex-direction: column;
@@ -22,21 +26,39 @@ header {
 }
 
 main {
-    height: 90vh;
-    display: flex;
-    background-image: url('./backin.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
+height: 90vh;
+display: flex;
 }
-.log {
+
+footer  {
+    position: relative;
+    background-color: black;
+    color: white;
+    height: 5%;
+    width: 197.9vh;
+    text-align: center;
+    bottom: 10px;
+}   
+   
+
+h1 {
 position: absolute;
 text-align: center;
-right:40% ;
-top:50%;
+right:36% ;
+top:85%;
+color:whitesmoke  ;
 
-    
-    
-   
+}
+
+.logotipo {
+    background-image: url('/GordosLogo-removebg-preview.png');
+    background-repeat: no-repeat;
+    position: absolute;
+    margin: 0 auto;
+    top: 15%;
+    bottom: 0%;
+    left: 33%;
+    right: 0%;
 }
 
 nav {
@@ -149,3 +171,4 @@ nav .icon-bars .line {
     }
 }
 
+}
