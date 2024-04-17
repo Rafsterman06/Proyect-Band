@@ -24,7 +24,6 @@ display: flex;
 
 .Y {
 position: absolute;
-
 height: 360px;
 background-color: #f7f7f7;
 border-radius: 6px;
@@ -50,7 +49,6 @@ footer  {
     height: 5%;
     text-align: center;
     bottom: 100px;
-   
 }
 
 .log {
