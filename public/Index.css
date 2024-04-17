@@ -15,7 +15,7 @@ body {
     background-image: url('./backin.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-
+}
 .container {
 flex-direction: column;
 display: flex;
@@ -174,4 +174,3 @@ nav .icon-bars .line {
     }
 }
 
-}
